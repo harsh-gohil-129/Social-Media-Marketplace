@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "server.js",
-  "module": "type",
+  "type": "module",
   "scripts": {
     "postinstall": "npx prisma generate",
     "start": "node server.js",
