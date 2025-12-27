@@ -19,8 +19,14 @@ import {
   Users,
 } from "lucide-react";
 import { setChat } from "../app/features/chatSlice";
+import toast from "react-hot-toast";
+import { useAuth, useClerk, useUser } from "@clerk/clerk-react";
+import api from "../configs/axios";
 
 const ListingDetails = () => {
+  const { user, isLoaded } = useUser();
+  const { getToken } = useAuth();
+  const { openSignIn } = useClerk();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currency = import.meta.env.VITE_CURRENCY || "$";
@@ -42,9 +48,28 @@ const ListingDetails = () => {
   const nextSlide = () =>
     setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
 
-  const purchaseAccount = async () => {};
+  const purchaseAccount = async () => {
+    try {
+      if (!user) return openSignIn();
+      toast.loading("creating payment link...");
+      const token = await getToken();
+      const { data } = await api.get(
+        `/api/listing/purchase-account/${listing.id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.dismissAll();
+      window.location.href = data.paymentLink;
+    } catch (error) {
+      toast.dismissAll();
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+    }
+  };
 
   const loadChatBox = () => {
+    if (!isLoaded || !user) return toast("Please login to chat with seller");
+    if (user.id === listing.ownerId)
+      return toast("You can't chat with your own listing");
     dispatch(setChat({ listing: listing }));
   };
 

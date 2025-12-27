@@ -14,6 +14,7 @@
   "description": "",
   "dependencies": {
     "@clerk/express": "^1.7.58",
+    "@imagekit/nodejs": "^7.1.1",
     "@neondatabase/serverless": "^1.0.2",
     "@prisma/adapter-neon": "^7.2.0",
     "@prisma/client": "^6.10.1",
@@ -22,6 +23,8 @@
     "express": "^5.2.1",
     "inngest": "^3.48.0",
     "multer": "^2.0.2",
+    "nodemailer": "^7.0.12",
+    "stripe": "^20.1.0",
     "ws": "^8.18.3"
   },
   "devDependencies": {
