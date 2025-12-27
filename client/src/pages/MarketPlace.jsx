@@ -3,7 +3,7 @@ import { ArrowLeftIcon, FilterIcon, Search } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ListingCard from "../components/ListingCard";
-import FilterSidebar from "../components/filterSidebar";
+import FilterSidebar from "../components/FilterSidebar";
 
 const MarketPlace = () => {
   const navigate = useNavigate();
